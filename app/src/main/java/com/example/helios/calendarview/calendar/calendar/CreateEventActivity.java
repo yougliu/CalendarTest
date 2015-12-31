@@ -3,6 +3,7 @@ package com.example.helios.calendarview.calendar.calendar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -11,6 +12,9 @@ import com.example.helios.calendarview.calendar.BaseActivity;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+
+import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.picker.TimePicker;
 
 /**
  * Created by Bonus Liu on 12/30/15.
@@ -57,16 +61,39 @@ public class CreateEventActivity extends BaseActivity {
         int id = view.getId();
         switch (id){
             case R.id.id_date:
+                DatePicker datePicker = new DatePicker(this);
+                datePicker.setRange(2000,3000);
+                //you should set today
+                datePicker.setSelectedItem(2015,12,31);
+                datePicker.setTopLineVisible(false);
+                datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+                    @Override
+                    public void onDatePicked(String year, String month, String day) {
+                        date.setText(year+"-"+month+"-"+day);
+                    }
+                });
+                datePicker.show();
                 break;
             case R.id.id_time:
+                TimePicker timePicker = new TimePicker(this);
+                timePicker.setSelectedItem(10,30);
+                timePicker.setTopLineVisible(false);
+                timePicker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
+                    @Override
+                    public void onTimePicked(String hour, String minute) {
+                        time.setText(hour+":"+minute);
+                    }
+                });
+                timePicker.show();
                 break;
             case R.id.id_duration:
-//                showPopup(R.layout.popup_dialog_layout, ViewGroup.LayoutParams.WRAP_CONTENT);
-                showPopup(R.layout.popup_dialog_layout,duration,400,250,R.id.id_duration,0,10);
+                showPopup(R.layout.popup_dialog_layout, ViewGroup.LayoutParams.WRAP_CONTENT);
                 break;
             case R.id.id_repeat:
+                showPopup(R.layout.popup_dialog_layout, ViewGroup.LayoutParams.WRAP_CONTENT);
                 break;
             case R.id.id_recommend:
+                showPopup(R.layout.popup_dialog_layout, ViewGroup.LayoutParams.WRAP_CONTENT);
                 break;
         }
     }
